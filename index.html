@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Widgets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Añadir nuevo widget</h2>
+      <h3><span class="normal-text">Tipo de widget</span></h3>
+      <ul id="widget-list">
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-font" aria-label="Texto"></i>
+          </div>
+          <span class="widget-text">Texto</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-hashtag" aria-label="Valor numérico"></i>
+          </div>
+          <span class="widget-text">Valor numérico</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-chart-line" aria-label="Gráfica de líneas"></i>
+          </div>
+          <span class="widget-text">Gráfica de líneas</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-chart-bar" aria-label="Gráfica de barras"></i>
+          </div>
+          <span class="widget-text">Gráfica de barras</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-chart-area" aria-label="Gráfica de líneas con área"></i>
+          </div>
+          <span class="widget-text">Gráfica de líneas con área</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-toggle-on" aria-label="Estado On/Off"></i>
+          </div>
+          <span class="widget-text">Estado On/Off</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-chart-pie" aria-label="Gráfica KPIs"></i>
+          </div>
+          <span class="widget-text">Gráfica KPIs</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-brain" aria-label="Conocimiento experto"></i>
+          </div>
+          <span class="widget-text">Conocimiento experto</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-map" aria-label="Mapa con datos de sensores"></i>
+          </div>
+          <span class="widget-text">Mapa con datos de sensores</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-camera" aria-label="Sensores sobre una imagen"></i>
+          </div>
+          <span class="widget-text">Sensores sobre una imagen</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-layer-group" aria-label="Serie de datos combinados"></i>
+          </div>
+          <span class="widget-text">Serie de datos combinados</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-location-arrow" aria-label="Valor y dirección"></i>
+          </div>
+          <span class="widget-text">Valor y dirección</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-circle-exclamation" aria-label="Indicador"></i>
+          </div>
+          <span class="widget-text">Indicador</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-tint" aria-label="Nivel de agua"></i>
+          </div>
+          <span class="widget-text">Nivel de agua</span>
+        </li>
+        <li class="widget-item">
+          <div class="widget-container">
+            <i class="fa-solid fa-clock" aria-label="Tiempos de máquina"></i>
+          </div>
+          <span class="widget-text">Tiempos de máquina</span>
+        </li>
+      </ul>
+    </aside>
+
+    <section class="column-form">
+      <div class="widget-form-container">
+        <h2>
+          <span class="normal-text">Widget:</span> Gráfica de líneas
+        </h2>
+        <p class="widget-description">
+          Permite escoger hasta 20 sensores a mostrar en la misma gráfica, el intervalo de adquisición de datos y
+          opcionalmente también definir los intervalos de colores para cada gráfica.
+          <a href="#"><u>Saber más</u></a>
+        </p>
+
+        <div class="form-row">
+          <label for="tituloWidget">Título del widget</label>
+          <input type="text" id="tituloWidget" placeholder="nombre (opcional)" />
+        </div>
+
+        <div class="form-row">
+          <label for="rangoDatos">Rango de datos</label>
+          <select id="rangoDatos">
+            <option value="ultimaHora">última hora</option>
+            <option value="hoy">hoy</option>
+            <option value="semana">esta semana</option>
+            <option value="mes">este mes</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="sensores">Sensores</label>
+          <select id="sensores">
+            <option value="">selecciona sensores</option>
+          </select>
+          <small class="note">Máximo 20 sensores</small>
+        </div>
+        <h3>Opciones adicionales</h3>
+        <div class="switch-row">
+          <span>Incluir las alertas y alarmas</span>
+          <label class="switch">
+            <input type="checkbox" id="checkAlertas" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-row">
+          <span>Crear intervalos de colores</span>
+          <label class="switch">
+            <input type="checkbox" id="checkIntervalos" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>Personalizar el rango del Eje Y</span>
+          <label class="switch">
+            <input type="checkbox" id="checkRangoEjeY" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <small class="note">CREAR INTERVALOS DE COLORES</small>
+        </div>
+        <div class="form-row">
+          <label for="sensores">Sensor para intervalos de colores</label>
+          <select id="sensores">
+            <option value="">selecciona sensores</option>
+          </select>
+        </div>
+
+        <div class="interval-row hidden" id="intervalRow">
+          <div class="form-row">
+            <label for="valorInicio">Valor de inicio del intervalo</label>
+            <input type="number" id="valorInicio" placeholder="0" />
+          </div>
+          <div class="form-row">
+            <label for="colorIntervalo">Color</label>
+            <div class="color-selector">
+              <div class="color-options">
+                <span class="color-bubble" style="background-color: #FFF5B1;"></span>
+                <span class="color-bubble" style="background-color: #FFE4B5;"></span>
+                <span class="color-bubble" style="background-color: #F8C8C8;"></span>
+                <span class="color-bubble" style="background-color: #D4EDDA;"></span>
+                <span class="color-bubble selected" style="background-color: #AFCBFF;"></span>
+                <span class="color-bubble" style="background-color: #D3C3E5;"></span>
+                <span class="color-bubble disabled"><i class="fa fa-pencil"></i></span>
+              </div>
+              <i class="fa fa-trash trash-icon"></i>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="boton-interval">
+          <button class="add-interval-btn" id="btnAddInterval">+ Añadir intervalo</button>
+        </div>
+
+        <div class="form-subtitulo">
+          <small class="note">PERSONALIZAR EL RANGO DEL EJE Y</small>
+        </div>
+        <div>
+
+        </div>
+        <h3>Establecer el valor</h3>
+        <div class="range-row">
+          <div class="check-range">
+            <input type="checkbox" id="checkMinimo" />
+            <label for="checkMinimo">mínimo</label>
+            <input type="number" id="minValue" placeholder="valor" disabled />
+          </div>
+        </div>
+
+        <div class="range-row">
+          <div class="check-range">
+            <input type="checkbox" id="checkMaximo" />
+            <label for="checkMaximo">máximo</label>
+            <input type="number" id="maxValue" placeholder="valor" disabled />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="column preview">
+      <h2>Vista previa</h2>
+      <div class="preview-box">
+        <div class="preview-header">
+          <span class="preview-title">título del widget</span>
+        </div>
+
+        <div class="preview-subheader">
+          <span class="preview-range">Última hora</span>
+          <span class="preview-datetime">04-01 12:51 | 04-01 13:41</span>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="myLineChart"></canvas>
+        </div>
+
+        <div class="preview-legend">
+          <span class="preview-color" style="background-color: #2bd2eb;"></span>
+          <span class="legend-label">Temperature - temperature - (NM-EM500-CO2)</span>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button type="button" class="cancel-btn">Cancelar</button>
+        <button type="button" class="add-widget-btn" id="btnAddWidget">Añadir widget</button>
+      </div>
+    </section>
+
+
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
