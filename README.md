@@ -4,6 +4,7 @@
 Este proyecto es una prueba técnica en la que se ha desarrollado un **dashboard de widgets interactivo**. La interfaz permite seleccionar distintos tipos de widgets, configurar opciones adicionales y visualizar una **gráfica en tiempo real**.  
 
 ## 🎯 **Objetivos cumplidos**
+
 ✅ **Estructura HTML, CSS y JavaScript organizada** en archivos separados.  
 ✅ **Dinamismo en la selección de widgets** en la columna izquierda.  
 ✅ **Acciones interactivas en el menú central** (switches, selectores, checkboxes).  
@@ -48,7 +49,7 @@ Este proyecto es una prueba técnica en la que se ha desarrollado un **dashboard
 
 
 ## 📸 **Captura de pantalla del resultado final**
-![Vista previa del Dashboard](prueba-tecnica-dashboard de Widgets.png)
+![Vista previa del Dashboard]![prueba-tecnica-dashboard de Widgets](https://github.com/user-attachments/assets/4aa5af31-180e-4df9-9a59-500c443b5aa5)
 
 
 
