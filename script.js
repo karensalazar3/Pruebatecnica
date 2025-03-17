@@ -1,55 +1,60 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* 📌 Elementos del formulario */
-  const tituloWidget = document.getElementById("tituloWidget");
-  const rangoDatos = document.getElementById("rangoDatos");
-  const checkMinimo = document.getElementById("checkMinimo");
-  const checkMaximo = document.getElementById("checkMaximo");
-  const minValue = document.getElementById("minValue");
-  const maxValue = document.getElementById("maxValue");
-  const checkIntervalos = document.getElementById("checkIntervalos");
-  const intervalRow = document.getElementById("intervalRow");
-  const btnAddInterval = document.getElementById("btnAddInterval");
-  const colorSelector = document.getElementById("colorIntervalsContainer");
-  const btnAddWidget = document.getElementById("btnAddWidget");
-  const widgetItems = document.querySelectorAll(".widget-item");
-  const toggleWidget = document.getElementById("toggle-widget");
-  const widgetOptions = document.getElementById("widget-options");
+  const elements = {
+    tituloWidget: document.getElementById("tituloWidget"),
+    rangoDatos: document.getElementById("rangoDatos"),
+    checkMinimo: document.getElementById("checkMinimo"),
+    checkMaximo: document.getElementById("checkMaximo"),
+    minValue: document.getElementById("minValue"),
+    maxValue: document.getElementById("maxValue"),
+    checkIntervalos: document.getElementById("checkIntervalos"),
+    intervalRow: document.getElementById("intervalRow"),
+    btnAddInterval: document.getElementById("btnAddInterval"),
+    colorSelector: document.getElementById("colorIntervalsContainer"),
+    btnAddWidget: document.getElementById("btnAddWidget"),
+    widgetItems: document.querySelectorAll(".widget-item"),
+    toggleWidget: document.getElementById("toggle-widget"),
+    widgetOptions: document.getElementById("widget-options"),
+    previewTitle: document.getElementById("preview-title"),
+    previewRange: document.getElementById("preview-range"),
+  };
 
-  /* 📌 1) Actualizar vista previa del título del widget */
-  tituloWidget?.addEventListener("input", () => {
-    document.getElementById("preview-title").textContent = tituloWidget.value.trim() || "Título del widget";
+  function validarFormulario() {
+    elements.btnAddWidget.disabled = !(
+      elements.tituloWidget?.value.trim() && elements.rangoDatos?.value
+    );
+  }
+
+  elements.tituloWidget?.addEventListener("input", () => {
+    elements.previewTitle.textContent = elements.tituloWidget.value.trim() || "Título del widget";
     validarFormulario();
   });
 
-  /* 📌 2) Actualizar la vista previa del rango de datos */
-  rangoDatos?.addEventListener("change", () => {
-    document.getElementById("preview-range").textContent = rangoDatos.options[rangoDatos.selectedIndex].text;
+  elements.rangoDatos?.addEventListener("change", () => {
+    elements.previewRange.textContent = elements.rangoDatos.options[elements.rangoDatos.selectedIndex].text;
     validarFormulario();
   });
 
-  /* 📌 3) Delegación de eventos para habilitar/deshabilitar inputs de mínimo y máximo */
   document.addEventListener("change", (event) => {
     if (event.target.matches("#checkMinimo")) {
-      minValue.disabled = !event.target.checked;
+      elements.minValue.disabled = !event.target.checked;
     }
     if (event.target.matches("#checkMaximo")) {
-      maxValue.disabled = !event.target.checked;
+      elements.maxValue.disabled = !event.target.checked;
+    }
+    if (event.target.matches("#checkIntervalos")) {
+      elements.intervalRow.classList.toggle("hidden", !event.target.checked);
+    }
+    if (event.target === elements.toggleWidget) {
+      alert(event.target.checked ? "Widget activado" : "Widget desactivado");
+    }
+    if (event.target === elements.widgetOptions) {
+      alert(`Seleccionaste: ${event.target.value}`);
     }
   });
 
-  /* 📌 4) Mostrar/Ocultar intervalos de colores */
-  checkIntervalos?.addEventListener("change", () => {
-    intervalRow.classList.toggle("hidden", !checkIntervalos.checked);
-  });
+  elements.btnAddInterval?.addEventListener("click", () => {
+    if (!elements.colorSelector) return console.error("El contenedor de intervalos de colores no existe.");
 
-  /* 📌 5) Agregar intervalos de colores dinámicamente */
-  btnAddInterval?.addEventListener("click", () => {
-    if (!colorSelector) {
-      console.error("El contenedor de intervalos de colores no existe.");
-      return;
-    }
-
-    // Crear el nuevo intervalo
     const newInterval = document.createElement("div");
     newInterval.classList.add("interval-row");
     newInterval.innerHTML = `
@@ -64,71 +69,36 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="delete-interval">✖</button>
     `;
 
-    // Evento para eliminar intervalos creados
-    newInterval.querySelector(".delete-interval").addEventListener("click", () => {
-      newInterval.remove();
-    });
-
-    // Agregar el nuevo intervalo al contenedor
-    colorSelector.appendChild(newInterval);
+    newInterval.querySelector(".delete-interval").addEventListener("click", () => newInterval.remove());
+    elements.colorSelector.appendChild(newInterval);
   });
 
-  /* 📌 6) Manejo de selección de widgets */
-  widgetItems.forEach(item => {
+  elements.widgetItems.forEach((item) =>
     item.addEventListener("click", function () {
-      setActiveClass(widgetItems);
+      elements.widgetItems.forEach((el) => el.classList.remove("active"));
       this.classList.add("active");
-    });
-  });
+    })
+  );
 
-  function setActiveClass(elements, activeClass = "active") {
-    elements.forEach(el => el.classList.remove(activeClass));
-  }
-
-  /* 📌 7) Switch para activar/desactivar el widget */
-  toggleWidget?.addEventListener("change", () => {
-    alert(toggleWidget.checked ? "Widget activado" : "Widget desactivado");
-  });
-
-  /* 📌 8) Dropdown (select) de opciones */
-  widgetOptions?.addEventListener("change", () => {
-    alert(`Seleccionaste: ${widgetOptions.value}`);
-  });
-
-  /* 📌 9) Validar formulario y deshabilitar el botón si está incompleto */
-  function validarFormulario() {
-    const titulo = tituloWidget?.value.trim();
-    const rango = rangoDatos?.value;
-    btnAddWidget.disabled = !(titulo && rango);
-  }
-
-  /* 📌 10) Validar valores numéricos en inputs */
   document.addEventListener("input", (event) => {
-    if (event.target.classList.contains("interval-value")) {
-      if (event.target.value < 0) {
-        event.target.value = 0;
-        alert("El valor de inicio no puede ser negativo.");
-      }
+    if (event.target.classList.contains("interval-value") && event.target.value < 0) {
+      event.target.value = 0;
+      alert("El valor de inicio no puede ser negativo.");
     }
   });
 
-  /* 📌 11) Creación de la gráfica con Chart.js */
   const canvas = document.getElementById("myLineChart");
   if (canvas) {
     const ctx = canvas.getContext("2d");
-
-    // Datos de ejemplo (horas y valores)
     const labels = ["13:00", "13:05", "13:10", "13:15", "13:20", "13:25", "13:30"];
     const dataValues = [23.5, 24.0, 23.8, 24.2, 24.1, 24.4, 23.9];
 
-    if (!labels.length || !dataValues.length) {
-      console.warn("No hay datos disponibles para la gráfica.");
-    }
+    if (!labels.length || !dataValues.length) console.warn("No hay datos disponibles para la gráfica.");
 
     new Chart(ctx, {
       type: "line",
       data: {
-        labels: labels,
+        labels,
         datasets: [
           {
             label: "Temperatura",
@@ -147,29 +117,20 @@ document.addEventListener("DOMContentLoaded", () => {
         scales: {
           y: {
             beginAtZero: false,
-            title: {
-              display: true,
-              text: "Valor (°C)",
-            },
+            title: { display: true, text: "Valor (°C)" },
           },
           x: {
-            title: {
-              display: true,
-              text: "Hora",
-            },
+            title: { display: true, text: "Hora" },
           },
         },
         plugins: {
-          legend: {
-            display: false,
-          },
+          legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: (context) => ` ${context.parsed.y} °C`,
-            },
+            callbacks: { label: (context) => ` ${context.parsed.y} °C` },
           },
         },
       },
     });
   }
 });
+
