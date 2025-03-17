@@ -46,14 +46,17 @@ Este proyecto es una prueba técnica en la que se ha desarrollado un **dashboard
 - **Uso de Flexbox y Media Queries** para adaptar la interfaz a **dispositivos móviles**.
 - **Distribución de columnas ajustable** según el tamaño de pantalla.
 
-KAREN SALAZAR.
----
 
 ## 📸 **Captura de pantalla del resultado final**
-![Vista previa del Dashboard](image.png)
+![Vista previa del Dashboard](![image](https://github.com/user-attachments/assets/5db8c473-3a05-481c-aaa0-847c223466ae)
+)
 
 ---
 
 ## 📜 **Instrucciones de uso**
 1️⃣ Clona el repositorio o descarga los archivos:  
 https://github.com/karensalazar3/Pruebatecnica
+
+---
+
+KAREN SALAZAR.
