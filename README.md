@@ -48,7 +48,8 @@ Este proyecto es una prueba técnica en la que se ha desarrollado un **dashboard
 
 
 ## 📸 **Captura de pantalla del resultado final**
-![Vista previa del Dashboard](prueba-tecnica-dashboard.png)
+![Vista previa del Dashboard](assets/prueba-tecnica-dashboard.png)
+
 
 
 ---
